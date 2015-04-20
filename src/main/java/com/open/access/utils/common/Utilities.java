@@ -90,10 +90,15 @@ public class Utilities {
     public static int hasInnerURL(JSONObject response){
     	
     	JSONArray jArray = null;
-    	JSONObject jObject = null;
+    	String jObject = null;
     	
-    	jArray = (JSONArray) response.get(KEY_OA_HASOPENACCESSWINDOW);
-    	jObject = (JSONObject) response.get(KEY_OA_OPENACCESSINHERITEDFROM);
+    	String obj = (String) response.get(KEY_OA_HASOPENACCESSWINDOW);
+    	if(obj != null && !obj.equals(""))
+    		jArray = (JSONArray) response.get(KEY_OA_HASOPENACCESSWINDOW);
+    	
+    	String obj1 = (String) response.get(KEY_OA_OPENACCESSINHERITEDFROM);
+    	if(obj1 != null && !obj1.equals(""))
+    		jObject = (String) response.get(KEY_OA_OPENACCESSINHERITEDFROM);
     	
     	if(jArray != null)
     		return 1;
@@ -111,14 +116,14 @@ public class Utilities {
     public static String[] getInnerURLDetails(JSONObject response){
     	
     	String[] urls = null;
-    	JSONObject jObject = null;
+    	String jObject = null;
     	JSONArray jArray = null;
     	
-    	jObject = (JSONObject) response.get(KEY_OA_OPENACCESSINHERITEDFROM);
+    	jObject = (String) response.get(KEY_OA_OPENACCESSINHERITEDFROM);
     	jArray = (JSONArray) response.get(KEY_OA_HASOPENACCESSWINDOW);
     	
     	if(jObject != null){
-    		urls = new String[jObject.size()];
+    		urls = new String[jObject.length()];
     		urls[0] = jObject.toString();
     	} else{
     		urls = new String[jArray.size()];
