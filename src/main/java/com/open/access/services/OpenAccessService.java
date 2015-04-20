@@ -1,16 +1,16 @@
 package com.open.access.services;
 
+import static com.open.access.utils.common.Constants.KEY_OA_JOURNALGROUP;
 import static com.open.access.utils.common.Constants.KEY_OAW_OPENACCESSWINDOW;
 import static com.open.access.utils.common.Constants.KEY_OA_ARTICLEGROUP;
-import static com.open.access.utils.common.Constants.KEY_OA_HASOPENACCESSWINDOW;
 import static com.open.access.utils.common.Constants.KEY_OA_ISSUEGROUP;
-import static com.open.access.utils.common.Constants.KEY_OA_JOURNALGROUP;
 import static com.open.access.utils.common.Constants.KEY_OA_OPENACCESSGROUP;
 import static com.open.access.utils.common.Service.openConnectionAndFetchDetails;
+import static com.open.access.utils.common.Service.saveData;
+
 import static com.open.access.utils.common.Utilities.getCriteriaURL;
 import static com.open.access.utils.common.Utilities.hasInnerURL;
-import static com.open.access.utils.common.Utilities.getInnerURL;
-import static com.open.access.utils.common.Service.saveData;
+import static com.open.access.utils.common.Utilities.getInnerURLDetails;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -35,27 +35,29 @@ public class OpenAccessService {
 		JSONObject jObj = null, finalJsonObject = null;
 		JSONParser parser = new JSONParser();
 		JSONObject jsonObject = new JSONObject();
-		
-		System.out.println("Process Started...");
-		jObj = (JSONObject)parser.parse(openConnectionAndFetchDetails(getCriteriaURL(identifier_prefix, identifier_id, KEY_OA_JOURNALGROUP)));
-		
-		if(hasInnerURL(jObj) == 1){
-			
-			/*	String[] urls = getInnerURL(jObj);
+
+		System.out.println("Process Started..."+getCriteriaURL(identifier_prefix, identifier_id, KEY_OA_JOURNALGROUP));
+		jObj = (JSONObject)parser.parse(openConnectionAndFetchDetails( getCriteriaURL(identifier_prefix, identifier_id, KEY_OA_JOURNALGROUP)));
+		//jsonObject.put(KEY_OA_ISSUEGROUP, (JSONObject)parser.parse(openConnectionAndFetchDetails(getCriteriaURL(identifier_prefix, identifier_id, KEY_OA_ISSUEGROUP))));
+		//jsonObject.put(KEY_OA_ARTICLEGROUP, (JSONObject)parser.parse(openConnectionAndFetchDetails(getCriteriaURL(identifier_prefix, identifier_id, KEY_OA_ARTICLEGROUP))));
+		//jsonObject.put(KEY_OAW_OPENACCESSWINDOW, (JSONObject)parser.parse(openConnectionAndFetchDetails(getCriteriaURL(identifier_prefix, identifier_id, KEY_OAW_OPENACCESSWINDOW))));
+		//jsonObject.put(KEY_OA_OPENACCESSGROUP, (JSONObject)parser.parse(openConnectionAndFetchDetails(getCriteriaURL(identifier_prefix, identifier_id, KEY_OA_OPENACCESSGROUP))));
+		System.out.println("Process End...");
+
+		//saveData(jsonObject.toString());
+		int result = hasInnerURL(jObj);
+		if(result == 1){
+			String[] urls = getInnerURLDetails(jObj);
 			for (String url : urls) {
 				jObj = (JSONObject)parser.parse(openConnectionAndFetchDetails(url));
-				finalJsonObject.p
-			}*/
-			
-		} else
-			jsonObject.put(KEY_OA_JOURNALGROUP, "jObj");
+				//finalJsonObject.p
+			}
+		} else if(result == 2){
+			//jsonObject.put(KEY_OA_JOURNALGROUP, "jObj");
 
-		jsonObject.put(KEY_OA_ISSUEGROUP, (JSONObject)parser.parse(openConnectionAndFetchDetails(getCriteriaURL(identifier_prefix, identifier_id, KEY_OA_ISSUEGROUP))));
-		jsonObject.put(KEY_OA_ARTICLEGROUP, (JSONObject)parser.parse(openConnectionAndFetchDetails(getCriteriaURL(identifier_prefix, identifier_id, KEY_OA_ARTICLEGROUP))));
-		jsonObject.put(KEY_OAW_OPENACCESSWINDOW, (JSONObject)parser.parse(openConnectionAndFetchDetails(getCriteriaURL(identifier_prefix, identifier_id, KEY_OAW_OPENACCESSWINDOW))));
-		jsonObject.put(KEY_OA_OPENACCESSGROUP, (JSONObject)parser.parse(openConnectionAndFetchDetails(getCriteriaURL(identifier_prefix, identifier_id, KEY_OA_OPENACCESSGROUP))));
-		System.out.println("Process End...");
-		
-		saveData(jsonObject.toString());
+
+		} else if(result == 3){
+
+		}
 	}
 }

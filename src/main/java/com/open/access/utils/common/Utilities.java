@@ -108,7 +108,7 @@ public class Utilities {
      * @param response
      * @return
      */
-    public static String[] getInnerURL(JSONObject response){
+    public static String[] getInnerURLDetails(JSONObject response){
     	
     	String[] urls = null;
     	JSONObject jObject = null;
