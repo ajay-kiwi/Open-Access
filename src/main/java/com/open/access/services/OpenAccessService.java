@@ -5,10 +5,8 @@ import static com.open.access.utils.common.Constants.KEY_OAW_OPENACCESSWINDOW;
 import static com.open.access.utils.common.Constants.KEY_OA_ARTICLEGROUP;
 import static com.open.access.utils.common.Constants.KEY_OA_ISSUEGROUP;
 import static com.open.access.utils.common.Constants.KEY_OA_OPENACCESSGROUP;
-
 import static com.open.access.utils.common.Constants.KEY_OA_HASOPENACCESSWINDOW;
 import static com.open.access.utils.common.Constants.KEY_OA_OPENACCESSINHERITEDFROM;
-
 import static com.open.access.utils.common.Service.openConnectionAndFetchDetails;
 import static com.open.access.utils.common.Service.saveData;
 import static com.open.access.utils.common.Service.getData;
@@ -16,18 +14,25 @@ import static com.open.access.utils.common.Utilities.getCriteriaURL;
 import static com.open.access.utils.common.Utilities.hasInnerURL;
 import static com.open.access.utils.common.Utilities.getInnerURLDetails;
 
+import java.util.logging.Level;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+
+import com.open.access.utils.common.Log;
 
 public class OpenAccessService {
 
 	public static void main(String[] args) throws Exception {
 		
+		Log.logger.log(Level.INFO, "Process Started...");
+		
 		OpenAccessService oas = new OpenAccessService();
 		oas.getCategoriesDetails("issn", "1873-0418");
 		
 		oas.settingupLabels();
+		Log.logger.log(Level.INFO, "Process End...");
 	}
 	
 	/**
@@ -39,6 +44,8 @@ public class OpenAccessService {
 	@SuppressWarnings("unchecked")
 	public void getCategoriesDetails(String identifier_prefix, String identifier_id) throws Exception{
 
+		Log.logger.log(Level.INFO, "getCategoriesDetails method called...");
+		
 		JSONArray jArray = new JSONArray();
 		JSONArray jArray1 = new JSONArray();
 		JSONParser parser = new JSONParser();
@@ -48,13 +55,10 @@ public class OpenAccessService {
 		
 		for (int i = 0; i < str.length; i++) {
 			
-			System.out.println("Process Started..."+ i);
-
 			jObj = (JSONObject)parser.parse(openConnectionAndFetchDetails(getCriteriaURL(identifier_prefix, identifier_id, str[i])));
 			jsonObject = new JSONObject();
 			jsonObject.put(str[i], jObj);
 
-			System.out.println("Process End...");
 			int result = hasInnerURL(jObj);
 			if(result == 1){
 				String[] urls = getInnerURLDetails(jObj);
@@ -86,6 +90,8 @@ public class OpenAccessService {
 	 */
 	public void settingupLabels() throws Exception{
 
+		Log.logger.log(Level.INFO, "settingupLabels method called...");
+		
 		getData();
 	}
 }

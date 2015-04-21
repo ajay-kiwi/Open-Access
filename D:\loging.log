@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2015-04-21T13:03:06</date>
+  <millis>1429601586285</millis>
+  <sequence>0</sequence>
+  <logger>com.kiwi.spring</logger>
+  <level>INFO</level>
+  <class>com.open.access.services.OpenAccessService</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>Welcome to UserController</message>
+</record>
+</log>

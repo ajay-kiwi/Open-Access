@@ -3,6 +3,8 @@ package com.open.access.utils.common;
 import static com.open.access.utils.common.Constants.KEY_OA_HASOPENACCESSWINDOW;
 import static com.open.access.utils.common.Constants.KEY_OA_OPENACCESSINHERITEDFROM;
 
+import java.util.logging.Level;
+
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -18,6 +20,8 @@ public class Utilities {
 	 */
 	public static String getCriteriaURL(String identifier_prefix, String identifier_id, String key) {
 		
+		Log.logger.log(Level.INFO, "getCriteriaURL method called...");
+		
 		return Constants.OA_BASE_URL + "/" + identifier_prefix + "/" + identifier_id + "?category=" + key;
 	}
 	
@@ -30,6 +34,8 @@ public class Utilities {
 	 */
 	public static String getPropertyURL(String identifier_prefix, String identifier_id, String key) {
 		
+		Log.logger.log(Level.INFO, "getPropertyURL method called...");
+		
 		return Constants.OA_BASE_URL + "/" + identifier_prefix + "/" + identifier_id + "?key=" + key;
 	}
 	
@@ -38,6 +44,9 @@ public class Utilities {
 	 * @return
 	 */
 	public static HttpAuthenticationFeature provideAuthenticationForPs() {
+		
+		Log.logger.log(Level.INFO, "provideAuthenticationForPs method called...");
+		
 		String authString = wsAuthCode();
 		HttpAuthenticationFeature authenticationFeature = HttpAuthenticationFeature
     			.universalBuilder()
@@ -51,10 +60,16 @@ public class Utilities {
 	 * @return
 	 */
 	public static String wsAuthCode() {
+		
+		Log.logger.log(Level.INFO, "wsAuthCode method called...");
+		
 		return Constants.usernameForPS+"#"+Constants.passwordForPS;
 	}
 	
     public StringBuffer removeStringFromStringBuffer(StringBuffer stringBuffer, String stringToRemove) {
+    	
+    	Log.logger.log(Level.INFO, "removeStringFromStringBuffer method called...");
+    	
     	String[] tempArray = stringBuffer.toString().split(Constants.DELIMITER_STRINGBUFFER_HASH);
     	String[] tempArray2 = new String[tempArray.length];
     	for (int i = 0; i < tempArray.length; i++) {
@@ -76,6 +91,9 @@ public class Utilities {
      * @return
      */
     public static boolean checkIfStringIsNullOrBlank(String toCheck) {
+    	
+    	Log.logger.log(Level.INFO, "checkIfStringIsNullOrBlank method called...");
+    	
     	boolean resultToReturn = false;
     	if(null == toCheck || !"".equals(toCheck))
     		resultToReturn = true;
@@ -88,6 +106,8 @@ public class Utilities {
      * @return
      */
     public static int hasInnerURL(JSONObject response){
+    	
+    	Log.logger.log(Level.INFO, "hasInnerURL method called...");
     	
     	JSONArray jArray = null;
     	String jObject = null;
@@ -114,6 +134,8 @@ public class Utilities {
      * @return
      */
     public static String[] getInnerURLDetails(JSONObject response){
+    	
+    	Log.logger.log(Level.INFO, "getInnerURLDetails method called...");
     	
     	String[] urls = null;
     	String jObject = null;
